@@ -1,0 +1,127 @@
+Here's an adjusted version based on the official steps provided by GitHub for managing large files with Git LFS. This guide aligns more closely with the GitHub documentation.
+
+---
+
+# How to Manage Large Files on GitHub Using Git LFS
+
+GitHub enforces a 100MB file size limit for regular uploads. However, if your project includes large files (such as datasets, machine learning models, or large binaries), you can manage these files with Git LFS (Large File Storage). Git LFS is an extension that allows Git to manage large files more efficiently. Here's a guide based on GitHub's official process.
+
+## Step 1: Install Git LFS
+
+First, you need to install Git LFS. If you don't already have it, you can install it by running the following command:
+
+```bash
+git lfs install
+```
+
+This initializes Git LFS for your current repository.
+
+If you don’t have Git LFS installed on your system, you can refer to the [official Git LFS installation guide](https://github.com/git-lfs/git-lfs#installation).
+
+## Step 2: Identify Large Files
+
+To identify files in your repository that are over 100MB and would be rejected by GitHub, you can use the following command in the terminal:
+
+```bash
+find . -type f -size +100M
+```
+
+This command will list all files in your project that exceed 100MB, making it easy to know which files need to be tracked with Git LFS.
+
+## Step 3: Track Large Files Using Git LFS
+
+Once you've identified the large files, you need to tell Git LFS to track those file types. Git LFS uses a `.gitattributes` file to track specific file types. For example, to track `.dll` and `.lib` files, you would use the following commands:
+
+```bash
+git lfs track "*.dll"
+git lfs track "*.lib"
+```
+
+You can track any other large file types in a similar way. The `.gitattributes` file is automatically created in your repository with the specified file types to be tracked by LFS.
+
+> **Tip:** Use `git lfs track` for all file types that are expected to be large (e.g., model files, videos, binaries, etc.).
+
+## Step 4: Add Tracked Files to Git
+
+Once you've set up Git LFS to track the large files, you can add all your files (including those being tracked by LFS) to your Git staging area with the following command:
+
+```bash
+git add .
+```
+
+This ensures that the tracked large files will be committed as LFS pointers rather than regular files.
+
+## Step 5: Commit Your Files
+
+Commit your files, including the large files now managed by Git LFS, using a standard Git commit:
+
+```bash
+git commit -m "Initial commit with large files tracked by Git LFS"
+```
+
+## Step 6: Link Your Local Repository to GitHub
+
+If you haven’t already created a remote repository on GitHub, do so now by creating a new repository on the GitHub website.
+
+Then, link your local repository to the remote GitHub repository using the following command:
+
+```bash
+git remote add origin https://github.com/YOUR-USERNAME/YOUR-REPOSITORY-NAME.git
+```
+
+Replace `YOUR-USERNAME` with your GitHub username and `YOUR-REPOSITORY-NAME` with the name of your GitHub repository.
+
+## Step 7: Push Your Project to GitHub
+
+Finally, push your project to GitHub using the following command:
+
+```bash
+git push origin master
+```
+
+When you push, Git LFS will manage the upload of large files by replacing them with small pointer files in the Git repository, while the large files are stored separately by Git LFS.
+
+### Important Notes:
+- Each individual file you want to store with Git LFS can be up to 2GB in size (GitHub’s limit for LFS-managed files).
+- The total storage limit for Git LFS is initially set to 1GB, but this can be increased by purchasing additional storage on GitHub.
+
+---
+
+### Summary of Commands:
+1. **Install Git LFS**:
+   ```bash
+   git lfs install
+   ```
+
+2. **Find files larger than 100MB**:
+   ```bash
+   find . -type f -size +100M
+   ```
+
+3. **Track large files using Git LFS**:
+   ```bash
+   git lfs track "*.dll"
+   git lfs track "*.lib"
+   ```
+
+4. **Add all files to Git**:
+   ```bash
+   git add .
+   ```
+
+5. **Commit the changes**:
+   ```bash
+   git commit -m "Initial commit with large files tracked by Git LFS"
+   ```
+
+6. **Link the local repository to GitHub**:
+   ```bash
+   git remote add origin https://github.com/YOUR-USERNAME/YOUR-REPOSITORY-NAME.git
+   ```
+
+7. **Push the project to GitHub**:
+   ```bash
+   git push origin master
+   ```
+
+By following these steps, you'll be able to efficiently manage and push large files to GitHub using Git LFS.
